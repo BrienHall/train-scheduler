@@ -1,47 +1,44 @@
-// 1. Initialize Firebase
 
 var config = {
-	apiKey: "",
-	authDomain: "",
-	databaseURL: "",
-	projectId: "",
+	apiKey: "AIzaSyBcIfv4moiP8B5XvnI0Z1Jd9hifvwNpghU",
+	authDomain: "train-scheduler-45535.firebaseapp.com",
+	databaseURL: "https://train-scheduler-45535.firebaseio.com",
+	projectId: "train-scheduler-45535",
 	storageBucket: "",
-	messagingSenderId: ""
-};
+	messagingSenderId: "302955548429"
+	};
+
 firebase.initializeApp(config);
+
 var database = firebase.database();
 
-
-// 2. Add a train action
-$("#add-train-btn").on("click", function(event) {
+$("#add-train").on("click", function(event) {
   event.preventDefault();
-  // Grabs user input
-  var trainName = $("#train-name-input").val().trim();
+
+  var trainName = $("#train-route-input").val().trim();
   var trainDestination= $("#destination-input").val().trim();
   var firstTrain = $('#first-train-input').val().trim();
   var trainFrequency = $("#frequency-input").val().trim();
-
-  // Creates local "temporary" object for holding Train data
+  
   var newTrain = {
     trainName: trainName,
     destination: trainDestination,
     firstTrain: firstTrain,
     frequency: trainFrequency
   };
-  // Insert train data to the database
+
   database.ref().push(newTrain);
-  // Alert
-  alert("Train successfully added");
-  // Clear inputs
+  
+  $("#success-modal").modal();
+  
   $('input[type="text"]').val('');
 });
 
-// 3. Create Firebase event for adding Train to the database and a row in the html when a user adds an entry
+
 database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 	var snapVal = childSnapshot.val();
 	console.log(snapVal);
 
-	// Calculate the next arrival time based on start time
 	var firstArrival = moment(snapVal.firstTrain, "HH:mm");
 	console.log("firstArrival: " + firstArrival);
 	
@@ -76,11 +73,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 	console.log(frequency);
 	console.log(firstTrain);
 	console.log(minutesAway);
-	
 
-
-
-	// Add each train's data into the table
 	$("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td class='nextTrainFrequency'>" +
 	frequency + "</td><td class='traintime'>" + nextTrainTime + "</td><td class='nextTrainMinutes'>" + minutesAway + "</td></tr>");
 	

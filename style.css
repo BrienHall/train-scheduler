@@ -1,0 +1,12 @@
+.jumbotron, .panel > .panel-heading, .btn {
+	background-color: #003A70;
+	color: white;
+}
+
+.jumbotron {
+	height: 150px;
+}
+
+.panel-body {
+	font-weight: bold;
+}
