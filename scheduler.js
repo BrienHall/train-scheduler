@@ -74,7 +74,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 	console.log(firstTrain);
 	console.log(minutesAway);
 
-	$("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td class='nextTrainFrequency'>" +
-	frequency + "</td><td class='traintime'>" + nextTrainTime + "</td><td class='nextTrainMinutes'>" + minutesAway + "</td></tr>");
+	$("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td class='nextTrainFrequency'>every " +
+	frequency + " min</td><td class='traintime'>" + nextTrainTime + "</td><td class='nextTrainMinutes'>" + minutesAway + "</td></tr>");
 	
 });
